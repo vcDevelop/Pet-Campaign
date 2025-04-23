@@ -6,59 +6,177 @@
     <title>PawFriends - Pet Friendly Campaign</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff6b6b;
-            --secondary: #4ecdc4;
-            --dark: #292f36;
-            --light: #f7fff7;
+            --primary: #5E72E4; /* Soft blue */
+            --secondary: #2DCE89; /* Mint green */
+            --accent: #FB6340; /* Coral */
+            --dark: #32325D; /* Dark blue */
+            --light: #F7FAFC; /* Light gray */
+            --text: #525F7F; /* Grayish blue */
         }
         
         body {
-            font-family: 'Comic Neue', cursive;
-            color: var(--dark);
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
             scroll-behavior: smooth;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: white !important;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary) !important;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            color: var(--dark) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
         }
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+            background: linear-gradient(135deg, rgba(94,114,228,0.9) 0%, rgba(45,206,137,0.9) 100%), 
                         url('https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2098&q=80');
             background-size: cover;
             background-position: center;
             height: 100vh;
+            min-height: 700px;
             display: flex;
             align-items: center;
             text-align: center;
             color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="white"></path><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="white"></path><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="white"></path></svg>');
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
         
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 2rem;
-            animation: fadeIn 2s;
+            font-weight: 700;
+            line-height: 1.2;
+            animation: fadeIn 1.5s both;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            opacity: 0;
+            animation: fadeIn 1s 0.5s both;
         }
         
         .cta-buttons {
             display: flex;
             justify-content: center;
-            gap: 1rem;
-            animation: slideUp 1s 0.5s both;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.2));
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover:after {
+            transform: translateY(0);
         }
         
         .btn-primary {
             background-color: var(--primary);
             border-color: var(--primary);
+            opacity: 0;
+            animation: slideUp 1s 0.8s both;
         }
         
         .btn-secondary {
-            background-color: var(--secondary);
-            border-color: var(--secondary);
+            background-color: white;
+            color: var(--primary);
+            border-color: white;
+            opacity: 0;
+            animation: slideUp 1s 1s both;
+        }
+        
+        .btn-outline-light {
+            opacity: 0;
+            animation: slideUp 1s 1.2s both;
         }
         
         /* Sections */
         section {
-            padding: 80px 0;
+            padding: 100px 0;
+            position: relative;
         }
         
         .section-title {
@@ -67,101 +185,443 @@
             position: relative;
         }
         
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: var(--text);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
         .section-title:after {
             content: "";
             display: block;
             width: 80px;
             height: 4px;
-            background: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             margin: 20px auto;
+            border-radius: 2px;
         }
         
         /* Volunteer Form */
         .volunteer-form {
-            background-color: #f8f9fa;
+            background-color: var(--light);
+        }
+        
+        .form-control, .form-select {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #E9ECEF;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(94, 114, 228, 0.25);
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--dark);
         }
         
         /* Impact Stories */
         .story-card {
-            transition: transform 0.3s;
+            transition: all 0.4s ease;
             margin-bottom: 30px;
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .story-card img {
+            transition: transform 0.5s ease;
         }
         
         .story-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .story-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .story-card .card-body {
+            padding: 25px;
+        }
+        
+        .story-card .card-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .story-card .card-text {
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+        
+        .read-more {
+            color: var(--primary);
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .read-more i {
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+        
+        .read-more:hover i {
+            transform: translateX(5px);
         }
         
         /* Pet Carousel */
+        .pet-carousel {
+            background-color: white;
+        }
+        
+        .pet-card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            margin: 0 15px;
+        }
+        
+        .pet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
         .pet-card img {
             height: 250px;
             object-fit: cover;
+            width: 100%;
+        }
+        
+        .pet-card .card-body {
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .pet-card .card-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .pet-card .pet-meta {
+            color: var(--text);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .carousel-control-prev, .carousel-control-next {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 1;
+        }
+        
+        .carousel-control-prev {
+            left: -25px;
+        }
+        
+        .carousel-control-next {
+            right: -25px;
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 80px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* Testimonials */
+        .testimonial-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin: 15px;
+            position: relative;
+        }
+        
+        .testimonial-card:before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 4rem;
+            color: rgba(94, 114, 228, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+        
+        .testimonial-content {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .author-info h5 {
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .author-info p {
+            color: var(--text);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 80px 0 30px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .footer-links h5 {
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            margin-top: 50px;
         }
         
         /* Chatbot */
         .chatbot-container {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 30px;
+            right: 30px;
             z-index: 1000;
+        }
+        
+        .chatbot-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(94, 114, 228, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
         }
         
         .chatbot-window {
             display: none;
-            width: 350px;
-            height: 500px;
+            width: 380px;
+            height: 550px;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
             flex-direction: column;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .chatbot-window.active {
+            display: flex;
+            transform: translateY(0);
+            opacity: 1;
         }
         
         .chatbot-header {
-            background: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
-            padding: 10px 15px;
-            border-radius: 10px 10px 0 0;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
-        .chatbot-messages {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
+        .chatbot-header h5 {
+            margin: 0;
+            font-weight: 600;
         }
         
-        .bot-message, .user-message {
-            margin-bottom: 10px;
-            padding: 8px 12px;
-            border-radius: 18px;
+        .close-chatbot {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .chatbot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: var(--light);
+        }
+        
+        .message {
+            margin-bottom: 15px;
             max-width: 80%;
+            padding: 12px 15px;
+            border-radius: 18px;
+            position: relative;
+            animation: fadeIn 0.3s ease;
         }
         
         .bot-message {
-            background: #f1f1f1;
+            background: white;
+            border-top-left-radius: 5px;
             align-self: flex-start;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         
         .user-message {
-            background: var(--secondary);
+            background: var(--primary);
             color: white;
-            align-self: flex-end;
+            border-top-right-radius: 5px;
             margin-left: auto;
         }
         
         .chatbot-input {
             display: flex;
-            padding: 10px;
+            padding: 15px;
             border-top: 1px solid #eee;
+            background: white;
         }
         
         .chatbot-input input {
             flex: 1;
-            padding: 8px;
+            padding: 12px 15px;
             border: 1px solid #ddd;
-            border-radius: 20px;
-            margin-right: 5px;
+            border-radius: 30px;
+            margin-right: 10px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .chatbot-input input:focus {
+            border-color: var(--primary);
+        }
+        
+        .send-message {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .send-message:hover {
+            background: var(--secondary);
+            transform: rotate(15deg);
         }
         
         /* Animations */
@@ -171,33 +631,160 @@
         }
         
         @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
+            from { transform: translateY(30px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
         
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.8rem;
+            }
+            
+            section {
+                padding: 80px 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 600px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
             }
             
             .cta-buttons {
                 flex-direction: column;
-                align-items: center;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+                margin: 0 auto;
             }
             
             .chatbot-window {
                 width: 90vw;
                 height: 70vh;
+                right: 5vw;
             }
+        }
+        
+        /* Utility Classes */
+        .text-primary {
+            color: var(--primary) !important;
+        }
+        
+        .bg-primary {
+            background-color: var(--primary) !important;
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+        
+        /* Form Enhancements */
+        .form-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-header h3 {
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .form-header p {
+            color: var(--text);
+        }
+        
+        .form-radio-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .form-radio-item {
+            flex: 1;
+        }
+        
+        .form-radio-item input {
+            display: none;
+        }
+        
+        .form-radio-item label {
+            display: block;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .form-radio-item input:checked + label {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .form-check {
+            margin-bottom: 20px;
+        }
+        
+        .form-check-input {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+        }
+        
+        .form-check-label {
+            margin-left: 10px;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--text);
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#"><i class="fas fa-paw"></i> PawFriends</a>
+            <a class="navbar-brand" href="#"><i class="fas fa-paw me-2"></i>PawFriends</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -205,6 +792,9 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#volunteer">Volunteer</a>
@@ -215,6 +805,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#adopt">Adopt</a>
                     </li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="#volunteer" class="btn btn-sm btn-primary">Join Us</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -223,11 +816,91 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
-            <h1>🐾 Making the World Pet-Friendly, One Paw at a Time</h1>
-            <div class="cta-buttons">
-                <a href="#volunteer" class="btn btn-primary btn-lg">Join the Movement</a>
-                <a href="#volunteer" class="btn btn-secondary btn-lg">Volunteer Now</a>
-                <a href="#stories" class="btn btn-outline-light btn-lg">Learn More</a>
+            <div class="hero-content">
+                <h1>Creating a Pet-Friendly World, One Paw at a Time</h1>
+                <p>Join our community of animal lovers working to make public spaces more accessible for pets and their owners through education, advocacy, and volunteer initiatives.</p>
+                <div class="cta-buttons">
+                    <a href="#volunteer" class="btn btn-primary btn-lg">Become a Volunteer</a>
+                    <a href="#adopt" class="btn btn-secondary btn-lg">Adopt a Pet</a>
+                    <a href="#about" class="btn btn-outline-light btn-lg">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Mission</h2>
+                <p>PawFriends is dedicated to creating inclusive communities where pets and their owners can thrive together through education, advocacy, and compassionate action.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-circle p-3 mb-4 mx-auto" style="width: 70px; height: 70px;">
+                                <i class="fas fa-home fa-2x"></i>
+                            </div>
+                            <h4 class="mb-3">Pet-Friendly Spaces</h4>
+                            <p>We work with businesses and public spaces to create welcoming environments for pets and their owners.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-circle p-3 mb-4 mx-auto" style="width: 70px; height: 70px;">
+                                <i class="fas fa-heart fa-2x"></i>
+                            </div>
+                            <h4 class="mb-3">Adoption Support</h4>
+                            <p>Our network helps connect rescued animals with loving forever homes through our adoption programs.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-circle p-3 mb-4 mx-auto" style="width: 70px; height: 70px;">
+                                <i class="fas fa-graduation-cap fa-2x"></i>
+                            </div>
+                            <h4 class="mb-3">Community Education</h4>
+                            <p>We provide workshops and resources to promote responsible pet ownership and animal welfare.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="1200">0</div>
+                        <div class="stat-label">Pets Adopted</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="350">0</div>
+                        <div class="stat-label">Volunteers</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="85">0</div>
+                        <div class="stat-label">Partner Businesses</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="12">0</div>
+                        <div class="stat-label">Cities</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -235,36 +908,93 @@
     <!-- Volunteer Form -->
     <section class="volunteer-form" id="volunteer">
         <div class="container">
-            <h2 class="section-title">Become a Volunteer</h2>
+            <div class="section-title">
+                <h2>Join Our Volunteer Team</h2>
+                <p>Complete the form below to apply as a volunteer. Our team will review your application and contact you within 3-5 business days.</p>
+            </div>
             <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <form id="volunteerForm" class="row g-3">
-                        <div class="col-md-6">
-                            <label for="name" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="name" required>
+                <div class="col-lg-10">
+                    <div class="form-section">
+                        <div class="form-header">
+                            <h3>Volunteer Application</h3>
+                            <p>Please fill out all required fields (*) to submit your application</p>
                         </div>
-                        <div class="col-md-6">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="city" class="form-label">City</label>
-                            <input type="text" class="form-control" id="city" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="role" class="form-label">Role Preference</label>
-                            <select class="form-select" id="role" required>
-                                <option value="">Select a role</option>
-                                <option value="foster">Foster Care</option>
-                                <option value="event">Event Volunteer</option>
-                                <option value="fundraising">Fundraising</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
+                        <form id="volunteerForm" class="row g-4">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label">First Name *</label>
+                                <input type="text" class="form-control" id="firstName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label">Last Name *</label>
+                                <input type="text" class="form-control" id="lastName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label">Phone Number *</label>
+                                <input type="tel" class="form-control" id="phone" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="city" class="form-label">City *</label>
+                                <input type="text" class="form-control" id="city" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="state" class="form-label">State/Province *</label>
+                                <input type="text" class="form-control" id="state" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Volunteer Interests *</label>
+                                <div class="form-radio-group">
+                                    <div class="form-radio-item">
+                                        <input type="radio" id="foster" name="volunteerType" value="foster" required>
+                                        <label for="foster">Foster Care</label>
+                                    </div>
+                                    <div class="form-radio-item">
+                                        <input type="radio" id="event" name="volunteerType" value="event">
+                                        <label for="event">Event Volunteer</label>
+                                    </div>
+                                    <div class="form-radio-item">
+                                        <input type="radio" id="fundraising" name="volunteerType" value="fundraising">
+                                        <label for="fundraising">Fundraising</label>
+                                    </div>
+                                    <div class="form-radio-item">
+                                        <input type="radio" id="other" name="volunteerType" value="other">
+                                        <label for="other">Other</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="experience" class="form-label">Previous Experience with Animals</label>
+                                <textarea class="form-control" id="experience" rows="3"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label for="availability" class="form-label">Availability *</label>
+                                <select class="form-select" id="availability" required>
+                                    <option value="">Select your availability</option>
+                                    <option value="weekdays">Weekdays</option>
+                                    <option value="weekends">Weekends</option>
+                                    <option value="both">Both</option>
+                                    <option value="flexible">Flexible</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                                    <label class="form-check-label" for="agreeTerms">
+                                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> *
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary btn-lg w-100">Submit Application</button>
+                            </div>
+                            <div class="form-footer">
+                                <p>Have questions? <a href="#contact">Contact our volunteer coordinator</a></p>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -273,235 +1003,31 @@
     <!-- Impact Stories -->
     <section class="impact-stories" id="stories">
         <div class="container">
-            <h2 class="section-title">Our Impact Stories</h2>
+            <div class="section-title">
+                <h2>Impact Stories</h2>
+                <p>Discover how our volunteers and programs are making a difference in communities across the country.</p>
+            </div>
             <div class="row" id="storiesContainer">
                 <!-- Stories loaded by JavaScript -->
             </div>
         </div>
     </section>
 
-    <!-- Pet Adoption Carousel -->
-    <section class="pet-carousel bg-light" id="adopt">
+    <!-- Testimonials -->
+    <section class="testimonials bg-light">
         <div class="container">
-            <h2 class="section-title">Pets Looking for Homes</h2>
+            <div class="section-title">
+                <h2>What People Say</h2>
+                <p>Hear from volunteers, adopters, and community partners about their experiences with PawFriends.</p>
+            </div>
             <div class="row">
-                <div class="col">
-                    <div id="petCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner" id="carouselInner">
-                            <!-- Pet cards loaded by JavaScript -->
+                <div class="col-lg-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>Volunteering with PawFriends has been one of the most rewarding experiences of my life. The team is incredibly supportive and the impact we make is tangible.</p>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#petCarousel" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon"></span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#petCarousel" data-bs-slide="next">
-                            <span class="carousel-control-next-icon"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
-        <div class="container text-center">
-            <p>&copy; 2023 PawFriends. All rights reserved.</p>
-            <div class="social-icons">
-                <a href="#" class="text-white mx-2"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="text-white mx-2"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="text-white mx-2"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- PawBuddy Chatbot -->
-    <div class="chatbot-container">
-        <button id="chatbotToggle" class="btn btn-primary rounded-circle p-3">
-            <i class="fas fa-paw"></i>
-        </button>
-        <div class="chatbot-window" id="chatbotWindow">
-            <div class="chatbot-header">
-                <h5 class="m-0">PawBuddy</h5>
-                <button id="closeChatbot" class="btn btn-sm btn-close btn-close-white"></button>
-            </div>
-            <div class="chatbot-messages" id="chatbotMessages">
-                <div class="bot-message">
-                    <p>Hi there! I'm PawBuddy. How can I help you today?</p>
-                </div>
-            </div>
-            <div class="chatbot-input">
-                <input type="text" id="userMessage" placeholder="Ask me about pets...">
-                <button id="sendMessage" class="btn btn-primary">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Volunteer Form Submission
-        document.getElementById('volunteerForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Thank you for volunteering! We will contact you soon.');
-            e.target.reset();
-        });
-
-        // Load Impact Stories
-        const stories = [
-            {
-                title: "From Stray to Stay",
-                content: "How we helped 50 stray dogs find forever homes in the last month.",
-                image: "https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2012&q=80"
-            },
-            {
-                title: "Community Transformation",
-                content: "How our volunteers transformed a neighborhood into a pet-friendly zone.",
-                image: "https://images.unsplash.com/photo-1583511655826-05700d52f4d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1976&q=80"
-            },
-            {
-                title: "Senior Pets Program",
-                content: "Our initiative to find homes for older pets has been a huge success!",
-                image: "https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-            }
-        ];
-
-        function loadStories() {
-            const container = document.getElementById('storiesContainer');
-            
-            stories.forEach(story => {
-                const storyHTML = `
-                <div class="col-md-4">
-                    <div class="card story-card h-100">
-                        <img src="${story.image}" class="card-img-top" alt="${story.title}">
-                        <div class="card-body">
-                            <h5 class="card-title">${story.title}</h5>
-                            <p class="card-text">${story.content}</p>
-                        </div>
-                    </div>
-                </div>
-                `;
-                container.innerHTML += storyHTML;
-            });
-        }
-
-        // Load Pet Carousel
-        const pets = [
-            {
-                name: "Buddy",
-                type: "Dog",
-                breed: "Golden Retriever",
-                age: "2 years",
-                image: "https://images.unsplash.com/photo-1633722715463-d30f4f325e24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
-                description: "Friendly and loves to play fetch!"
-            },
-            {
-                name: "Whiskers",
-                type: "Cat",
-                breed: "Tabby",
-                age: "1.5 years",
-                image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2043&q=80",
-                description: "Loves cuddles and has a calm demeanor"
-            },
-            {
-                name: "Rex",
-                type: "Dog",
-                breed: "German Shepherd",
-                age: "3 years",
-                image: "https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2098&q=80",
-                description: "Loyal and protective, great with kids"
-            }
-        ];
-
-        function loadPets() {
-            const carouselInner = document.getElementById('carouselInner');
-            
-            pets.forEach((pet, index) => {
-                const activeClass = index === 0 ? 'active' : '';
-                const petHTML = `
-                <div class="carousel-item ${activeClass}">
-                    <div class="card pet-card mx-auto" style="width: 18rem;">
-                        <img src="${pet.image}" class="card-img-top" alt="${pet.name}">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">${pet.name}</h5>
-                            <p class="card-text">${pet.type} • ${pet.breed} • ${pet.age}</p>
-                            <p class="card-text">${pet.description}</p>
-                            <a href="#volunteer" class="btn btn-primary">Adopt Me!</a>
-                        </div>
-                    </div>
-                </div>
-                `;
-                carouselInner.innerHTML += petHTML;
-            });
-        }
-
-        // Chatbot Functionality
-        document.getElementById('chatbotToggle').addEventListener('click', () => {
-            const chatbot = document.getElementById('chatbotWindow');
-            chatbot.style.display = chatbot.style.display === 'flex' ? 'none' : 'flex';
-        });
-
-        document.getElementById('closeChatbot').addEventListener('click', () => {
-            document.getElementById('chatbotWindow').style.display = 'none';
-        });
-
-        const chatbotResponses = {
-            "hello": "Hi there! How can I help you with our pet-friendly campaign today?",
-            "volunteer": "You can volunteer by filling out our volunteer form on the website! Just scroll down or click the 'Volunteer Now' button.",
-            "adopt": "Check out our pet adoption carousel to see pets looking for homes. Scroll down to the 'Adopt' section!",
-            "default": "I'm PawBuddy, here to help with your pet-related questions. Ask me about volunteering, adoption, or our campaign!"
-        };
-
-        document.getElementById('sendMessage').addEventListener('click', sendMessage);
-        document.getElementById('userMessage').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
-
-        function sendMessage() {
-            const userInput = document.getElementById('userMessage');
-            const message = userInput.value.trim();
-            
-            if (message) {
-                addMessage(message, 'user');
-                
-                let response = chatbotResponses.default;
-                const lowerMessage = message.toLowerCase();
-                
-                if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
-                    response = chatbotResponses.hello;
-                } else if (lowerMessage.includes('volunteer')) {
-                    response = chatbotResponses.volunteer;
-                } else if (lowerMessage.includes('adopt')) {
-                    response = chatbotResponses.adopt;
-                }
-                
-                setTimeout(() => {
-                    addMessage(response, 'bot');
-                }, 500);
-                
-                userInput.value = '';
-            }
-        }
-
-        function addMessage(text, sender) {
-            const messagesContainer = document.getElementById('chatbotMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add(`${sender}-message`);
-            
-            const messageP = document.createElement('p');
-            messageP.textContent = text;
-            messageDiv.appendChild(messageP);
-            
-            messagesContainer.appendChild(messageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            loadStories();
-            loadPets();
-        });
-    </script>
-</body>
-</html>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Sarah Johnson">
+                            <div class="author-info">
+                                <h5>Sarah Johnson</h5>
+                                <p>Volunteer since 2025
