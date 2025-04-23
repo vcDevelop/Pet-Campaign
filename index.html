@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawFriends - Pet Friendly Campaign</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #4ecdc4;
+            --dark: #292f36;
+            --light: #f7fff7;
+        }
+        
+        body {
+            font-family: 'Comic Neue', cursive;
+            color: var(--dark);
+            scroll-behavior: smooth;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2098&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 2s;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            animation: slideUp 1s 0.5s both;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            margin: 20px auto;
+        }
+        
+        /* Volunteer Form */
+        .volunteer-form {
+            background-color: #f8f9fa;
+        }
+        
+        /* Impact Stories */
+        .story-card {
+            transition: transform 0.3s;
+            margin-bottom: 30px;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        /* Pet Carousel */
+        .pet-card img {
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        /* Chatbot */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .chatbot-window {
+            display: none;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            flex-direction: column;
+        }
+        
+        .chatbot-header {
+            background: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chatbot-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .bot-message, .user-message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 18px;
+            max-width: 80%;
+        }
+        
+        .bot-message {
+            background: #f1f1f1;
+            align-self: flex-start;
+        }
+        
+        .user-message {
+            background: var(--secondary);
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        
+        .chatbot-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        .chatbot-input input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 5px;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .chatbot-window {
+                width: 90vw;
+                height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-paw"></i> PawFriends</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#volunteer">Volunteer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#stories">Stories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#adopt">Adopt</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>🐾 Making the World Pet-Friendly, One Paw at a Time</h1>
+            <div class="cta-buttons">
+                <a href="#volunteer" class="btn btn-primary btn-lg">Join the Movement</a>
+                <a href="#volunteer" class="btn btn-secondary btn-lg">Volunteer Now</a>
+                <a href="#stories" class="btn btn-outline-light btn-lg">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Volunteer Form -->
+    <section class="volunteer-form" id="volunteer">
+        <div class="container">
+            <h2 class="section-title">Become a Volunteer</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <form id="volunteerForm" class="row g-3">
+                        <div class="col-md-6">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" class="form-control" id="city" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="role" class="form-label">Role Preference</label>
+                            <select class="form-select" id="role" required>
+                                <option value="">Select a role</option>
+                                <option value="foster">Foster Care</option>
+                                <option value="event">Event Volunteer</option>
+                                <option value="fundraising">Fundraising</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Stories -->
+    <section class="impact-stories" id="stories">
+        <div class="container">
+            <h2 class="section-title">Our Impact Stories</h2>
+            <div class="row" id="storiesContainer">
+                <!-- Stories loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Pet Adoption Carousel -->
+    <section class="pet-carousel bg-light" id="adopt">
+        <div class="container">
+            <h2 class="section-title">Pets Looking for Homes</h2>
+            <div class="row">
+                <div class="col">
+                    <div id="petCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" id="carouselInner">
+                            <!-- Pet cards loaded by JavaScript -->
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#petCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#petCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>&copy; 2023 PawFriends. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="#" class="text-white mx-2"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PawBuddy Chatbot -->
+    <div class="chatbot-container">
+        <button id="chatbotToggle" class="btn btn-primary rounded-circle p-3">
+            <i class="fas fa-paw"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <h5 class="m-0">PawBuddy</h5>
+                <button id="closeChatbot" class="btn btn-sm btn-close btn-close-white"></button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="bot-message">
+                    <p>Hi there! I'm PawBuddy. How can I help you today?</p>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="userMessage" placeholder="Ask me about pets...">
+                <button id="sendMessage" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Volunteer Form Submission
+        document.getElementById('volunteerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for volunteering! We will contact you soon.');
+            e.target.reset();
+        });
+
+        // Load Impact Stories
+        const stories = [
+            {
+                title: "From Stray to Stay",
+                content: "How we helped 50 stray dogs find forever homes in the last month.",
+                image: "https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2012&q=80"
+            },
+            {
+                title: "Community Transformation",
+                content: "How our volunteers transformed a neighborhood into a pet-friendly zone.",
+                image: "https://images.unsplash.com/photo-1583511655826-05700d52f4d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1976&q=80"
+            },
+            {
+                title: "Senior Pets Program",
+                content: "Our initiative to find homes for older pets has been a huge success!",
+                image: "https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            }
+        ];
+
+        function loadStories() {
+            const container = document.getElementById('storiesContainer');
+            
+            stories.forEach(story => {
+                const storyHTML = `
+                <div class="col-md-4">
+                    <div class="card story-card h-100">
+                        <img src="${story.image}" class="card-img-top" alt="${story.title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${story.title}</h5>
+                            <p class="card-text">${story.content}</p>
+                        </div>
+                    </div>
+                </div>
+                `;
+                container.innerHTML += storyHTML;
+            });
+        }
+
+        // Load Pet Carousel
+        const pets = [
+            {
+                name: "Buddy",
+                type: "Dog",
+                breed: "Golden Retriever",
+                age: "2 years",
+                image: "https://images.unsplash.com/photo-1633722715463-d30f4f325e24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
+                description: "Friendly and loves to play fetch!"
+            },
+            {
+                name: "Whiskers",
+                type: "Cat",
+                breed: "Tabby",
+                age: "1.5 years",
+                image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2043&q=80",
+                description: "Loves cuddles and has a calm demeanor"
+            },
+            {
+                name: "Rex",
+                type: "Dog",
+                breed: "German Shepherd",
+                age: "3 years",
+                image: "https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2098&q=80",
+                description: "Loyal and protective, great with kids"
+            }
+        ];
+
+        function loadPets() {
+            const carouselInner = document.getElementById('carouselInner');
+            
+            pets.forEach((pet, index) => {
+                const activeClass = index === 0 ? 'active' : '';
+                const petHTML = `
+                <div class="carousel-item ${activeClass}">
+                    <div class="card pet-card mx-auto" style="width: 18rem;">
+                        <img src="${pet.image}" class="card-img-top" alt="${pet.name}">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">${pet.name}</h5>
+                            <p class="card-text">${pet.type} • ${pet.breed} • ${pet.age}</p>
+                            <p class="card-text">${pet.description}</p>
+                            <a href="#volunteer" class="btn btn-primary">Adopt Me!</a>
+                        </div>
+                    </div>
+                </div>
+                `;
+                carouselInner.innerHTML += petHTML;
+            });
+        }
+
+        // Chatbot Functionality
+        document.getElementById('chatbotToggle').addEventListener('click', () => {
+            const chatbot = document.getElementById('chatbotWindow');
+            chatbot.style.display = chatbot.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        document.getElementById('closeChatbot').addEventListener('click', () => {
+            document.getElementById('chatbotWindow').style.display = 'none';
+        });
+
+        const chatbotResponses = {
+            "hello": "Hi there! How can I help you with our pet-friendly campaign today?",
+            "volunteer": "You can volunteer by filling out our volunteer form on the website! Just scroll down or click the 'Volunteer Now' button.",
+            "adopt": "Check out our pet adoption carousel to see pets looking for homes. Scroll down to the 'Adopt' section!",
+            "default": "I'm PawBuddy, here to help with your pet-related questions. Ask me about volunteering, adoption, or our campaign!"
+        };
+
+        document.getElementById('sendMessage').addEventListener('click', sendMessage);
+        document.getElementById('userMessage').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        function sendMessage() {
+            const userInput = document.getElementById('userMessage');
+            const message = userInput.value.trim();
+            
+            if (message) {
+                addMessage(message, 'user');
+                
+                let response = chatbotResponses.default;
+                const lowerMessage = message.toLowerCase();
+                
+                if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+                    response = chatbotResponses.hello;
+                } else if (lowerMessage.includes('volunteer')) {
+                    response = chatbotResponses.volunteer;
+                } else if (lowerMessage.includes('adopt')) {
+                    response = chatbotResponses.adopt;
+                }
+                
+                setTimeout(() => {
+                    addMessage(response, 'bot');
+                }, 500);
+                
+                userInput.value = '';
+            }
+        }
+
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add(`${sender}-message`);
+            
+            const messageP = document.createElement('p');
+            messageP.textContent = text;
+            messageDiv.appendChild(messageP);
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStories();
+            loadPets();
+        });
+    </script>
+</body>
+</html>
